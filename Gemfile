@@ -19,6 +19,7 @@ group :development do
   gem 'guard-bundler', '~> 2.1.0'
   gem 'guard-rack', '~> 2.0.0'
   gem 'rubocop', '0.33.0'
+  gem 'capistrano', '~> 3.4.0'
 end
 
 group :test do
