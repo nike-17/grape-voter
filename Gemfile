@@ -13,6 +13,7 @@ gem 'activerecord', '~> 4.2.0', require: 'active_record'
 gem 'mysql'
 gem 'puma'
 
+
 group :development do
   gem 'rake', '~> 10.0.3'
   gem 'guard', '~> 2.10.5'
@@ -20,6 +21,8 @@ group :development do
   gem 'guard-rack', '~> 2.0.0'
   gem 'rubocop', '0.33.0'
   gem 'capistrano', '~> 3.4.0'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'capistrano-rbenv', '~> 2.0'
 end
 
 group :test do
