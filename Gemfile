@@ -12,10 +12,10 @@ gem 'grape-activerecord'
 gem 'activerecord', '~> 4.2.0', require: 'active_record'
 gem 'mysql'
 gem 'puma'
+gem 'rake', '~> 10.0.3'
 
 
 group :development do
-  gem 'rake', '~> 10.0.3'
   gem 'guard', '~> 2.10.5'
   gem 'guard-bundler', '~> 2.1.0'
   gem 'guard-rack', '~> 2.0.0'
@@ -23,6 +23,8 @@ group :development do
   gem 'capistrano', '~> 3.4.0'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rbenv', '~> 2.0'
+  gem "capistrano-rails", '~> 1.1.1'
+
 end
 
 group :test do
