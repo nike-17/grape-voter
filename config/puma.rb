@@ -1,5 +1,7 @@
 # Change to match your CPU core count
 workers 1
+environment 'production'
+puma_env 'production'
 
 # Min and Max threads per worker
 threads 1, 6
