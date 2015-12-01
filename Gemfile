@@ -13,6 +13,7 @@ gem 'activerecord', '~> 4.2.0', require: 'active_record'
 gem 'mysql'
 gem 'puma'
 gem 'rake', '~> 10.0.3'
+gem 'actionpack'
 
 
 group :development do

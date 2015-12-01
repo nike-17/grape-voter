@@ -1,5 +1,6 @@
 require 'pathname'
 require 'bundler'
+require 'action_dispatch/middleware/remote_ip.rb'
 Bundler.require(:default, ENV['RACK_ENV'] || :development)
 
 ROOT = Pathname.new(File.expand_path('../..', __FILE__))

@@ -1,3 +1,5 @@
+require 'ipaddr'
+
 module Models
 	class Vote < ActiveRecord::Base
 		TYPE_PRO = 'pro'
@@ -7,34 +9,54 @@ module Models
 		TYPE_DISAPPROVES = 'disapproves'
 
 
-		def self.pro(name)
-			Vote._vote(name, TYPE_PRO)
+		def self.pro(name, ip)
+			Vote._vote(name, TYPE_PRO, ip)
 		end
 
-		def self.contra(name)
-			Vote._vote(name, TYPE_CONTRA)
+		def self.contra(name, ip)
+			Vote._vote(name, TYPE_CONTRA, ip)
 		end
 
-		def self.who(name)
-			Vote._vote(name, TYPE_WHO)
+		def self.who(name, ip)
+			Vote._vote(name, TYPE_WHO, ip)
 		end
 
-		def self.approves()
-			Vote._vote('', TYPE_APPROVES)
+		def self.approves(ip)
+			Vote._vote('', TYPE_APPROVES, ip)
+			Vote._agreggated_votes
 		end
 
-		def self.disapproves()
-			Vote._vote('', TYPE_DISAPPROVES)
+		def self.disapproves(ip)
+			Vote._vote('', TYPE_DISAPPROVES, ip)
+			Vote._agreggated_votes
 		end
 
-		def self._vote(name, subject)
-			Vote.create(
-				{
+		def self._vote(name, subject, ip)
+			data = {
 					:name => name,
 					:subject => subject,
-					:ammount => 1
+					:ammount => 1,
+					:ip => Vote.ip_addr(ip)
 				}
-			)
+			vote = Vote.find_by(data) || Vote.create(data)
+			vote.save!
+		end
+
+		def self.ip_addr(ip)
+			ipAddr = IPAddr.new ip
+			ipAddr.to_i
+		end
+		def self._agreggated_votes()
+			approves = 0
+			disapproves = 0
+			Vote.where("subject = ? OR subject = ?", TYPE_APPROVES, TYPE_DISAPPROVES).each do |vote|
+				if vote.subject == TYPE_APPROVES
+					approves = approves + 1
+				else
+					disapproves = disapproves + 1
+				end
+			end
+			{:approves => approves, :disapproves => disapproves}
 		end
 	end
 end
