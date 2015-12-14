@@ -11,10 +11,12 @@ module Models
 
 		def self.pro(name, ip)
 			Vote._vote(name, TYPE_PRO, ip)
+			Vote._agreggated_votes_procontra
 		end
 
 		def self.contra(name, ip)
 			Vote._vote(name, TYPE_CONTRA, ip)
+			Vote._agreggated_votes_procontra
 		end
 
 		def self.who(name, ip)
@@ -23,7 +25,7 @@ module Models
 
 		def self.approves(ip)
 			Vote._vote('', TYPE_APPROVES, ip)
-			Vote._agreggated_votes
+			Vote._agreggated_votes_approve
 		end
 
 		def self.disapproves(ip)
