@@ -28,7 +28,7 @@ module Models
 
 		def self.disapproves(ip)
 			Vote._vote('', TYPE_DISAPPROVES, ip)
-			Vote._agreggated_votes
+			Vote._agreggated_votes_approve
 		end
 
 		def self._vote(name, subject, ip)
@@ -46,7 +46,7 @@ module Models
 			ipAddr = IPAddr.new ip
 			ipAddr.to_i
 		end
-		def self._agreggated_votes()
+		def self._agreggated_votes_approve()
 			approves = 0
 			disapproves = 0
 			Vote.where("subject = ? OR subject = ?", TYPE_APPROVES, TYPE_DISAPPROVES).each do |vote|
@@ -57,6 +57,18 @@ module Models
 				end
 			end
 			{:approves => approves, :disapproves => disapproves}
+		end
+		def self._agreggated_votes_procontra()
+			pro = 0
+			contra = 0
+			Vote.where("subject = ? OR subject = ?", TYPE_PRO, TYPE_CONTRA).each do |vote|
+				if vote.subject == TYPE_PRO
+					pro = pro + 1
+				else
+					contra = contra + 1
+				end
+			end
+			{:pro => pro, :contra => contra}
 		end
 	end
 end
