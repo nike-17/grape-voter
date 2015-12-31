@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201131849) do
+ActiveRecord::Schema.define(version: 20151231153604) do
 
   create_table "votes", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
@@ -21,5 +21,8 @@ ActiveRecord::Schema.define(version: 20151201131849) do
     t.datetime "updated_at",             null: false
     t.integer  "ip",         limit: 4
   end
+
+  add_index "votes", ["name"], name: "index_votes_on_name", using: :btree
+  add_index "votes", ["subject"], name: "index_votes_on_subject", using: :btree
 
 end
