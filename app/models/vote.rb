@@ -11,16 +11,17 @@ module Models
 
 		def self.pro(name, ip)
 			Vote._vote(name, TYPE_PRO, ip)
-			Vote._agreggated_votes_procontra
+			Vote._agreggated_votes_procontra(name)
 		end
 
 		def self.contra(name, ip)
 			Vote._vote(name, TYPE_CONTRA, ip)
-			Vote._agreggated_votes_procontra
+			Vote._agreggated_votes_procontra(name)
 		end
 
 		def self.who(name, ip)
 			Vote._vote(name, TYPE_WHO, ip)
+			Vote._agreggated_votes_who(name)
 		end
 
 		def self.approves(ip)
@@ -48,6 +49,7 @@ module Models
 			ipAddr = IPAddr.new ip
 			ipAddr.to_i
 		end
+		
 		def self._agreggated_votes_approve()
 			approves = 0
 			disapproves = 0
@@ -60,17 +62,25 @@ module Models
 			end
 			{:approves => approves, :disapproves => disapproves}
 		end
-		def self._agreggated_votes_procontra()
+		
+		def self._agreggated_votes_procontra(name)
 			pro = 0
 			contra = 0
-			Vote.where("subject = ? OR subject = ?", TYPE_PRO, TYPE_CONTRA).each do |vote|
+			who = 0 
+			Vote.where("name = ? and (subject = ? OR subject = ? OR subject = ?)", name, TYPE_PRO, TYPE_CONTRA, TYPE_WHO).each do |vote|
 				if vote.subject == TYPE_PRO
 					pro = pro + 1
+				elsif vote.subject == TYPE_WHO
+					who = who + 1		
 				else
 					contra = contra + 1
 				end
 			end
-			{:pro => pro, :contra => contra}
+			{:pro => pro, :contra => contra, :who => who}
+		end
+
+		def self._agreggated_votes_who(name)
+			Vote.count(:conditions => "(subject =#{TYPE_WHO} and name=#{name})")
 		end
 	end
 end
