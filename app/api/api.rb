@@ -30,13 +30,7 @@ module Api
         Models::Vote.disapproves(client_ip)
       end
       post :top do
-        cache = ActiveSupport::Cache::MemoryStore.new
-        top = cache.read('top')
-        unless top
-           top = Models::Vote.top
-           cache.write('top', top)
-        end
-        top
+        Models::Vote.top
       end
     end
   end

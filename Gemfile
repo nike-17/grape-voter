@@ -15,7 +15,6 @@ gem 'puma'
 gem 'rake', '~> 10.0.3'
 gem 'actionpack'
 
-
 group :development do
   gem 'guard', '~> 2.10.5'
   gem 'guard-bundler', '~> 2.1.0'
