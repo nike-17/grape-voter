@@ -125,6 +125,7 @@ GEM
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.9)
+    magic_encoding (0.0.2)
     method_source (0.8.2)
     mime-types (2.6.2)
     mini_portile (0.6.0)
@@ -236,6 +237,7 @@ DEPENDENCIES
   guard-rack (~> 2.0.0)
   iconv
   json (~> 1.8.3)
+  magic_encoding (~> 0.0.2)
   mime-types
   mysql
   nokogiri (= 1.6.3.1)
