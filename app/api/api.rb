@@ -29,9 +29,6 @@ module Api
       post :disapproves do
         Models::Vote.disapproves(client_ip)
       end
-      post :top do
-        Models::Vote.top
-      end
     end
   end
 end
