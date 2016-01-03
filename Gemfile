@@ -14,7 +14,7 @@ gem 'mysql'
 gem 'puma'
 gem 'rake', '~> 10.0.3'
 gem 'actionpack'
-
+gem 'magic_encoding', '~> 0.0.2'
 group :development do
   gem 'guard', '~> 2.10.5'
   gem 'guard-bundler', '~> 2.1.0'
