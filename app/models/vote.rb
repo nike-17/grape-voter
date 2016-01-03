@@ -34,6 +34,9 @@ module Models
 			Vote._agreggated_votes_approve
 		end
 
+		def self.top
+			{:pro => self._top_for(TYPE_PRO), :contra=> self._top_for(TYPE_CONTRA), :who=> self._top_for(TYPE_WHO)}
+		end
 		def self._vote(name, subject, ip)
 			data = {
 					:name => name,
@@ -81,6 +84,14 @@ module Models
 
 		def self._agreggated_votes_who(name)
 			Vote.count(:conditions => "(subject =#{TYPE_WHO} and name=#{name})")
+		end
+
+		def self._top_for(subject)
+			Vote.select("sum(ammount) as ammount_sum, name")
+			.where("subject = ?", subject)
+			.group('name')
+			.order('ammount_sum DESC')
+			.limit(10)
 		end
 	end
 end
