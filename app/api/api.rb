@@ -29,6 +29,10 @@ module Api
       post :disapproves do
         Models::Vote.disapproves(client_ip)
       end
+
+      post :propose do
+          Models::Propose.send(params[:name])
+      end
     end
   end
 end

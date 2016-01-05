@@ -15,6 +15,8 @@ gem 'puma'
 gem 'rake', '~> 10.0.3'
 gem 'actionpack'
 gem 'magic_encoding', '~> 0.0.2'
+gem 'mailgun-ruby', '~>1.0.3', require: 'mailgun'
+
 group :development do
   gem 'guard', '~> 2.10.5'
   gem 'guard-bundler', '~> 2.1.0'
