@@ -25,7 +25,7 @@ namespace :data do
     File.open("/www/putin.io/data/candidates.json","w") do |f|
 
       candidates = Models::Candidate.all.to_a.map { |e|  
-        {:name => e.name.force_encoding("UTF-8"), :description => e.description, :image => e.image}
+        {:name => e.name.force_encoding("UTF-8"), :description => e.description.force_encoding("UTF-8"), :image => e.image}
       } 
 
       f.write(candidates.to_json)
