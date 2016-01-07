@@ -63,6 +63,7 @@ GEM
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     colorize (0.7.7)
+    configatron (4.5.0)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
@@ -243,6 +244,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.1.1)
   capistrano-rbenv (~> 2.0)
   capybara (~> 2.4.4)
+  configatron
   grape (~> 0.13.0)
   grape-activerecord
   grape-entity (~> 0.4.8)

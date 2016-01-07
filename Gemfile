@@ -16,6 +16,7 @@ gem 'rake', '~> 10.0.3'
 gem 'actionpack'
 gem 'magic_encoding', '~> 0.0.2'
 gem 'mailgun-ruby', '~>1.0.3', require: 'mailgun'
+gem 'configatron'
 
 group :development do
   gem 'guard', '~> 2.10.5'

@@ -1,0 +1,4 @@
+
+configatron do |config|
+  config.mailgun_api_key = "your key"
+end

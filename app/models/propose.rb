@@ -1,6 +1,5 @@
 require 'mailgun'
 
-
 module Models
 	class Propose
 		def self.send(name)
@@ -12,7 +11,7 @@ Subject: Nominated Candiate
 
 #{name}
 MESSAGE_END
-			mg_client = Mailgun::Client.new "56714e2ca0793bb8d9f83f11e0bc25b6"
+			mg_client = Mailgun::Client.new configatron.mailgun_api_key
 
 			message_params = {:from    => 'info@putin.io',
                   :to      => 'nike-17@ya.ru',
@@ -20,7 +19,7 @@ MESSAGE_END
                   :text    => message}
 
 # Send your message through the client
-mg_client.send_message "sending_domain.com", message_params
+mg_client.send_message "putin.io", message_params
 
 
 

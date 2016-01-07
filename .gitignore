@@ -34,3 +34,6 @@ bower.json
 # Ignore pow environment settings
 .powenv
 config/database.yml
+config/mail.rb
+shared/log/*
+shared/pids/*
