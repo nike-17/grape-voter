@@ -34,5 +34,10 @@ module Api
           Models::Propose.send(params[:name])
       end
     end
+    resource :candidate do
+      get :all do
+        Models::Candidate.all.to_a.map(&:serializable_hash)
+      end
+    end
   end
 end

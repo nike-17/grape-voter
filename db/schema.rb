@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160103164029) do
+ActiveRecord::Schema.define(version: 20160107131018) do
+
+  create_table "candidates", force: :cascade do |t|
+    t.string "name",        limit: 255,   null: false
+    t.text   "description", limit: 65535, null: false
+    t.string "image",       limit: 255,   null: false
+  end
 
   create_table "votes", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
