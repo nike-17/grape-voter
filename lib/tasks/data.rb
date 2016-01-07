@@ -24,14 +24,14 @@ namespace :data do
   task :generate_candidates => :environment do
     File.open("/www/putin.io/data/candidates.json","w") do |f|
 
-      candidates = Models::Candidate.all.to_json
+      candidates = Models::Candidate.all
       candidates.each do |key, array|
         candidates[key]  = array.map { |e|  
           {:name => e.name.force_encoding("UTF-8"), :description => e.description, :image => e.image}
         } 
         end 
 
-      f.write(Models::Candidate.all.to_json)
+      f.write(candidates.to_json)
     end
   end
 
