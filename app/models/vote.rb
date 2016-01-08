@@ -2,6 +2,8 @@ require 'ipaddr'
 
 module Models
 	class Vote < ActiveRecord::Base
+		belongs_to :candidate
+
 		TYPE_PRO = 'pro'
 		TYPE_CONTRA = 'contra'
 		TYPE_WHO = 'who'
