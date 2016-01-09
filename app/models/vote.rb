@@ -90,6 +90,7 @@ module Models
 			Vote.select("sum(ammount) as ammount_sum, candidate_id")
 			.where("subject = ?", subject)
 			.group('candidate_id')
+			.joins(:candidate)
 			.order('ammount_sum DESC')
 			.limit(10)
 		end
