@@ -11,16 +11,17 @@ module Api
     resource :vote do
       desc "vote pro"
       params do
-      	requires :name, type: String, desc: ''
+        requires :candidate_id, type: Integer, desc: ''
+
       end	
       post :pro do
-        Models::Vote.pro(params[:name], client_ip)
+        Models::Vote.pro(params[:candidate_id], client_ip)
       end
       post :contra do
-       	Models::Vote.contra(params[:name], client_ip)
+       	Models::Vote.contra(params[:candidate_id], client_ip)
       end
       post :who do
-        Models::Vote.who(params[:name], client_ip)
+        Models::Vote.who(params[:candidate_id], client_ip)
       end
 
       post :approves do

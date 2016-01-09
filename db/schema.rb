@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160108135457) do
+ActiveRecord::Schema.define(version: 20160109151230) do
 
   create_table "candidates", force: :cascade do |t|
     t.string "name",        limit: 255,   null: false
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20160108135457) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.string   "name",         limit: 255, null: false
     t.string   "subject",      limit: 255, null: false
     t.integer  "ammount",      limit: 4,   null: false
     t.datetime "created_at",               null: false
@@ -30,7 +29,6 @@ ActiveRecord::Schema.define(version: 20160108135457) do
   end
 
   add_index "votes", ["candidate_id"], name: "index_votes_on_candidate_id", using: :btree
-  add_index "votes", ["name"], name: "index_votes_on_name", using: :btree
   add_index "votes", ["subject"], name: "index_votes_on_subject", using: :btree
 
 end

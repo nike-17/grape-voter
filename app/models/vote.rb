@@ -11,37 +11,39 @@ module Models
 		TYPE_DISAPPROVES = 'disapproves'
 
 
-		def self.pro(name, ip)
-			Vote._vote(name, TYPE_PRO, ip)
-			Vote._agreggated_votes_procontra(name)
+		def self.pro(candidate_id, ip)
+				
+			Vote._vote_by_id(candidate_id, TYPE_PRO, ip)
+			Vote._agreggated_votes_procontra(candidate_id)
 		end
 
-		def self.contra(name, ip)
-			Vote._vote(name, TYPE_CONTRA, ip)
-			Vote._agreggated_votes_procontra(name)
+		def self.contra(candidate_id, ip)
+			Vote._vote_by_id(candidate_id, TYPE_CONTRA, ip)
+			Vote._agreggated_votes_procontra(candidate_id)
 		end
 
-		def self.who(name, ip)
-			Vote._vote(name, TYPE_WHO, ip)
-			Vote._agreggated_votes_who(name)
+		def self.who(candidate_id, ip)
+			Vote._vote_by_id(candidate_id, TYPE_WHO, ip)
+			Vote._agreggated_votes_procontra(candidate_id)
 		end
 
 		def self.approves(ip)
-			Vote._vote('', TYPE_APPROVES, ip)
+			Vote._vote_by_id(nil, TYPE_APPROVES, ip)
 			Vote._agreggated_votes_approve
 		end
 
 		def self.disapproves(ip)
-			Vote._vote('', TYPE_DISAPPROVES, ip)
+			Vote._vote_by_id(nil, TYPE_DISAPPROVES, ip)
 			Vote._agreggated_votes_approve
 		end
 
 		def self.top
 			{:pro => self._top_for(TYPE_PRO), :contra=> self._top_for(TYPE_CONTRA), :who=> self._top_for(TYPE_WHO)}
 		end
-		def self._vote(name, subject, ip)
-			data = {
-					:name => name,
+
+		def self._vote_by_id(candidate_id, subject, ip)
+				data = {
+					:candidate_id => candidate_id,
 					:subject => subject,
 					:ammount => 1,
 					:ip => Vote.ip_addr(ip)
@@ -68,11 +70,11 @@ module Models
 			{:approves => approves, :disapproves => disapproves}
 		end
 		
-		def self._agreggated_votes_procontra(name)
+		def self._agreggated_votes_procontra(candidate_id)
 			pro = 0
 			contra = 0
 			who = 0 
-			Vote.where("name = ? and (subject = ? OR subject = ? OR subject = ?)", name, TYPE_PRO, TYPE_CONTRA, TYPE_WHO).each do |vote|
+			Vote.where("candidate_id = ? and (subject = ? OR subject = ? OR subject = ?)", candidate_id, TYPE_PRO, TYPE_CONTRA, TYPE_WHO).each do |vote|
 				if vote.subject == TYPE_PRO
 					pro = pro + 1
 				elsif vote.subject == TYPE_WHO
@@ -84,14 +86,10 @@ module Models
 			{:pro => pro, :contra => contra, :who => who}
 		end
 
-		def self._agreggated_votes_who(name)
-			Vote.count(:conditions => "(subject =#{TYPE_WHO} and name=#{name})")
-		end
-
 		def self._top_for(subject)
-			Vote.select("sum(ammount) as ammount_sum, name")
+			Vote.select("sum(ammount) as ammount_sum, candidate_id")
 			.where("subject = ?", subject)
-			.group('name')
+			.group('candidate_id')
 			.order('ammount_sum DESC')
 			.limit(10)
 		end
