@@ -12,8 +12,7 @@ namespace :data do
   		top = Models::Vote.top
   		top.each do |key, array|
   			top[key]  = array.map { |e|  
-  				{:name => e.candidate.name.force_encoding("UTF-8"), :count => e.ammount_sum, :id:e.candidate.id}
-
+  				{:name => e.candidate.name.force_encoding("UTF-8"), :count => e.ammount_sum, :id => e.candidate.id}
   			} 
         end 
       f.write(top.to_json)  
