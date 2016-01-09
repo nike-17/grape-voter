@@ -12,7 +12,7 @@ namespace :data do
   		top = Models::Vote.top
   		top.each do |key, array|
   			top[key]  = array.map { |e|  
-  				{:name => e.candidates.name.force_encoding("UTF-8"), :count => e.ammount_sum}
+  				{:name => e.candidate.name.force_encoding("UTF-8"), :count => e.ammount_sum, :id:e.candidate.id}
 
   			} 
         end 
@@ -29,20 +29,6 @@ namespace :data do
       } 
 
       f.write(candidates.to_json)
-    end
-  end
-
-
-
-  desc 'Attach Votes to Candidates'
-  task :votes2candidates => :environment do
-    candidates = {}
-    Model::Votes.all.each do |vote|
-      unless candidates[vote.name].present?
-        candidates[vote.name] = Model::Candidates.find_by_name(vote.name)
-    end
-    vote.candidate = candidates[vote.name]
-    vote.save
     end
   end
 
