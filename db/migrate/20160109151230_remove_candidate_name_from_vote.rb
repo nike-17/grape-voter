@@ -3,9 +3,10 @@ class RemoveCandidateNameFromVote < ActiveRecord::Migration
   	candidates = {}
   	Models::Vote.all.each do |vote|
   		unless candidates[vote.name].present?
-  			candidates[vote.name] = Models::Candidate.find_by_name(vote.name)
+  			candidates[vote.name] = Models::Candidate.find_by_name(vote.name).id
 		end
-		vote.candidate = candidates[vote.name]
+		puts candidate.name
+		vote.candidate_id = candidates[vote.name]
 		vote.save
   	end
   	remove_column :votes, :name
