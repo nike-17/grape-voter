@@ -1,7 +1,7 @@
 class RemoveCandidateNameFromVote < ActiveRecord::Migration
   def change
   	candidates = {}
-  	Models::Vote.where("subject = 'pro' or subject = 'contra' and candidate_id is null").each do |vote|
+  	Models::Vote.where("(subject = 'pro' or subject = 'contra') and candidate_id is null").each do |vote|
   		unless candidates[vote.name].present?
   			candidates[vote.name] = Models::Candidate.find_by_name(vote.name)
 		end
@@ -11,7 +11,7 @@ class RemoveCandidateNameFromVote < ActiveRecord::Migration
 		else 
 			puts vote.name 
 			puts vote.subject
-			vote.destroy
+			# vote.destroy
 		end
 
   	end
