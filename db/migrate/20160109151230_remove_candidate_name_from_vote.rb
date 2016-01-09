@@ -10,7 +10,7 @@ class RemoveCandidateNameFromVote < ActiveRecord::Migration
 			vote.candidate_id = candidates[vote.name]
 			vote.save
 		else 
-			puts vote.name votes.subject
+			puts vote.name vote.subject
 			vote.destroy
 		end
 
