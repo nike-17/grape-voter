@@ -3,8 +3,8 @@ class VotesAttacheCandidatesAgain < ActiveRecord::Migration
   	candidates = {}
   	Models::Vote.where("subject = 'pro' or subject = 'contra' and candidate_id is null").each do |vote|
   		name = vote.name
-  		name.gsub! ',', '_'
-  		name.gsub! ' ', '_'
+  		name =  name.gsub ',', '_'
+  		name = name.gsub ' ', '_'
 
   		puts name;
   		unless candidates[name].present?
