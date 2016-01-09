@@ -6,7 +6,6 @@ class RemoveCandidateNameFromVote < ActiveRecord::Migration
   			candidates[vote.name] = Models::Candidate.find_by_name(vote.name)
 		end
 		if candidates[vote.name].present?
-			puts candidate.name
 			vote.candidate_id = candidates[vote.name]
 			vote.save
 		else 
