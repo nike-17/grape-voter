@@ -44,6 +44,7 @@ module Models
 		def self.aggregate_by_date
 			Vote.select('sum(ammount) as ammount_sum, candidate_id, subject, DATE(created_at) as day')
 				.where('subject in ("pro", "contra", "who")')
+				.joins(:candidate)
 				.group('CONCAT(candidate_id, subject, DATE(created_at))')
 		end
 		def self._vote_by_id(candidate_id, subject, ip)

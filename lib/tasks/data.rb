@@ -36,10 +36,12 @@ namespace :data do
         result[item['candidate_id']][item['subject']][item['day']] = {}
       end
       result[item['candidate_id']][item['subject']][item['day']] = item['ammount_sum']
+      result[item['candidate_id']][:candidate] =   {:name => item.candidate.name.force_encoding("UTF-8"), :description => item.candidate.description.force_encoding("UTF-8"), :image => item.candidate.image, :id => item.candidate.id}
+
     end 
 
     result.each do |candidate_id, content|
-      File.open("/www/putin.io/data/candidate/#{candidate_id}.json","w") do |f|
+      File.open("temp/#{candidate_id}.json","w") do |f|
         f.write(content.to_json) 
       end 
     end
