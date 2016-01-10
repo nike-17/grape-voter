@@ -41,7 +41,7 @@ namespace :data do
     end 
 
     result.each do |candidate_id, content|
-      File.open("temp/#{candidate_id}.json","w") do |f|
+      File.open("/www/putin.io/data/candidate/#{candidate_id}.json","w") do |f|
         f.write(content.to_json) 
       end 
     end
