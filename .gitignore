@@ -37,3 +37,4 @@ config/database.yml
 config/mail.rb
 shared/log/*
 shared/pids/*
+temp/

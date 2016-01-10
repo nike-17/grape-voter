@@ -41,6 +41,11 @@ module Models
 			{:pro => self._top_for(TYPE_PRO), :contra=> self._top_for(TYPE_CONTRA), :who=> self._top_for(TYPE_WHO)}
 		end
 
+		def self.aggregate_by_date
+			Vote.select('sum(ammount) as ammount_sum, candidate_id, subject, DATE(created_at) as day')
+				.where('subject in ("pro", "contra", "who")')
+				.group('CONCAT(candidate_id, subject, DATE(created_at))')
+		end
 		def self._vote_by_id(candidate_id, subject, ip)
 				data = {
 					:candidate_id => candidate_id,
@@ -94,5 +99,6 @@ module Models
 			.order('ammount_sum DESC')
 			.limit(10)
 		end
+
 	end
 end
