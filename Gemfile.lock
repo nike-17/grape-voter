@@ -208,6 +208,8 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
+    sitemap_generator (5.1.0)
+      builder
     slop (3.6.0)
     spoon (0.0.4)
       ffi
@@ -268,6 +270,7 @@ DEPENDENCIES
   rspec (~> 3.1)
   rubocop (= 0.33.0)
   selenium-webdriver (~> 2.47.1)
+  sitemap_generator
 
 BUNDLED WITH
    1.10.6

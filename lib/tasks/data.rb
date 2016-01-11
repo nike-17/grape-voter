@@ -1,4 +1,6 @@
 require 'json'
+require 'sitemap_generator'
+
 
 namespace :data do
   
@@ -61,6 +63,19 @@ namespace :data do
       File.open("/www/putin.io/data/candidate/#{candidate_id}.json","w") do |f|
         f.write(content.to_json) 
       end 
+    end
+  end
+
+  desc 'Generate sitemap'
+  task :generate_sitemap => :environment do
+    SitemapGenerator::Sitemap.default_host = 'http://putin.io'
+    SitemapGenerator::Sitemap.public_path = '/www/putin.io/'
+    SitemapGenerator::Sitemap.create do
+      add '/', :changefreq => 'daily', :priority => 0.9
+      for i in 0..97
+        add '/who/#{i}', :changefreq => 'weekly'
+      end
+      
     end
   end
 

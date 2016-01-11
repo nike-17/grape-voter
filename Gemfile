@@ -17,6 +17,8 @@ gem 'actionpack'
 gem 'magic_encoding', '~> 0.0.2'
 gem 'mailgun-ruby', '~>1.0.3', require: 'mailgun'
 gem 'configatron'
+gem 'sitemap_generator'
+
 
 group :development do
   gem 'guard', '~> 2.10.5'
