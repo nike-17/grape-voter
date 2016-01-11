@@ -73,7 +73,7 @@ namespace :data do
     SitemapGenerator::Sitemap.compress = false
     SitemapGenerator::Sitemap.create do
       add '/', :changefreq => 'daily', :priority => 0.9
-      for i in 0..97
+      for i in 1..97
         add "/who/#{i}", :changefreq => 'weekly'
       end
       
