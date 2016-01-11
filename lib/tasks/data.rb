@@ -70,6 +70,7 @@ namespace :data do
   task :generate_sitemap => :environment do
     SitemapGenerator::Sitemap.default_host = 'http://putin.io'
     SitemapGenerator::Sitemap.public_path = '/www/putin.io/'
+    SitemapGenerator::Sitemap.compress = false
     SitemapGenerator::Sitemap.create do
       add '/', :changefreq => 'daily', :priority => 0.9
       for i in 0..97
