@@ -83,7 +83,7 @@ namespace :data do
 
   desc 'Generate candidates file'
   task :generate_candidates => :environment do
-    File.open("temp/candidates.json","w") do |f|
+    File.open("/www/putin.io/data/candidates.json","w") do |f|
 
       aggregatedAll = Models::Vote.agreggated_all_votes_procontrawho
       candidates = Models::Candidate.all.to_a.map { |e|  
