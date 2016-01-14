@@ -25,6 +25,7 @@ namespace :data do
   task :generate_all => :environment do
     agg = Models::Vote.aggregate_by_date
     result = {}
+    aggregatedAll = Models::Vote.agreggated_all_votes_procontrawho
     agg.each do |item|
       unless result[item['candidate_id']].present?
         result[item['candidate_id']] = {}
@@ -56,11 +57,11 @@ namespace :data do
         
       result[item['candidate_id']][item['subject']][item['day']] = item['ammount_sum']
       result[item['candidate_id']][:candidate] =   {:name => item.candidate.name.force_encoding("UTF-8"), :description => item.candidate.description.force_encoding("UTF-8"), :image => item.candidate.image, :id => item.candidate.id}
-
+      result[item['candidate_id']][:stat] = aggregatedAll[item['candidate_id']]
     end 
 
     result.each do |candidate_id, content|
-      File.open("/www/putin.io/data/candidate/#{candidate_id}.json","w") do |f|
+      File.open("temp/#{candidate_id}.json","w") do |f|
         f.write(content.to_json) 
       end 
     end

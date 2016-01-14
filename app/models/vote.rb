@@ -92,6 +92,29 @@ module Models
 			{:pro => pro, :contra => contra, :who => who}
 		end
 
+		def self.agreggated_all_votes_procontrawho()
+			
+			candidates = {}
+			Vote.where("(subject = ? OR subject = ? OR subject = ?)", TYPE_PRO, TYPE_CONTRA, TYPE_WHO).each do |vote|
+				
+				unless candidates[vote.candidate_id].present?
+					candidates[vote.candidate_id] = {
+						:pro => 0,
+						:contra => 0,
+						:who => 0
+					}
+				end
+				if vote.subject == TYPE_PRO
+					candidates[vote.candidate_id][:pro] = candidates[vote.candidate_id][:pro] + 1
+				elsif vote.subject == TYPE_WHO
+					candidates[vote.candidate_id][:who] = candidates[vote.candidate_id][:who] + 1		
+				else
+					candidates[vote.candidate_id][:contra] = candidates[vote.candidate_id][:contra] + 1
+				end
+			end
+			candidates
+		end
+
 		def self._top_for(subject)
 			Vote.select("sum(ammount) as ammount_sum, candidate_id")
 			.where("subject = ?", subject)
