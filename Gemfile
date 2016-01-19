@@ -18,6 +18,7 @@ gem 'magic_encoding', '~> 0.0.2'
 gem 'mailgun-ruby', '~>1.0.3', require: 'mailgun'
 gem 'configatron'
 gem 'sitemap_generator'
+gem  'geoip'
 
 
 group :development do

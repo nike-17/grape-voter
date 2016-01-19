@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160109151230) do
+ActiveRecord::Schema.define(version: 20160118144207) do
 
   create_table "candidates", force: :cascade do |t|
     t.string "name",        limit: 255,   null: false
@@ -20,12 +20,17 @@ ActiveRecord::Schema.define(version: 20160109151230) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.string   "subject",      limit: 255, null: false
-    t.integer  "ammount",      limit: 4,   null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.integer  "ip",           limit: 8
-    t.integer  "candidate_id", limit: 4
+    t.string   "subject",          limit: 255, null: false
+    t.integer  "ammount",          limit: 4,   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "ip",               limit: 8
+    t.integer  "candidate_id",     limit: 4
+    t.string   "city_name",        limit: 255
+    t.string   "real_region_name", limit: 255
+    t.string   "country_name",     limit: 255
+    t.string   "latitude",         limit: 255
+    t.string   "longitude",        limit: 255
   end
 
   add_index "votes", ["candidate_id"], name: "index_votes_on_candidate_id", using: :btree

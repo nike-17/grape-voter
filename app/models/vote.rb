@@ -1,4 +1,5 @@
 require 'ipaddr'
+require 'geoip'
 
 module Models
 	class Vote < ActiveRecord::Base
@@ -10,21 +11,19 @@ module Models
 		TYPE_APPROVES = 'approves'
 		TYPE_DISAPPROVES = 'disapproves'
 
+		@geo = GeoIP.new('./data/GeoLiteCity.dat')
+
 
 		def self.pro(candidate_id, ip)
-				
 			Vote._vote_by_id(candidate_id, TYPE_PRO, ip)
-			Vote._agreggated_votes_procontra(candidate_id)
 		end
 
 		def self.contra(candidate_id, ip)
 			Vote._vote_by_id(candidate_id, TYPE_CONTRA, ip)
-			Vote._agreggated_votes_procontra(candidate_id)
 		end
 
 		def self.who(candidate_id, ip)
 			Vote._vote_by_id(candidate_id, TYPE_WHO, ip)
-			Vote._agreggated_votes_procontra(candidate_id)
 		end
 
 		def self.approves(ip)
@@ -55,6 +54,7 @@ module Models
 					:ip => Vote.ip_addr(ip)
 				}
 			vote = Vote.find_by(data) || Vote.create(data)
+			Vote._set_geoip(vote, ip)
 			vote.save!
 		end
 
@@ -114,7 +114,6 @@ module Models
 			end
 			candidates
 		end
-
 		def self._top_for(subject)
 			Vote.select("sum(ammount) as ammount_sum, candidate_id")
 			.where("subject = ?", subject)
@@ -122,6 +121,31 @@ module Models
 			.joins(:candidate)
 			.order('ammount_sum DESC')
 			.limit(10)
+		end
+
+		def self._set_geoip(vote, ip)
+	
+			data = @geo.city(ip)
+	  		if data.present?
+		  		if data.city_name.present?
+		  			vote.city_name = data.city_name
+		  		end
+		  		if data.real_region_name.present?
+		  			vote.real_region_name = data.real_region_name
+		  		end
+
+		  		if data.country_name.present?
+		  			vote.country_name = data.country_name
+		  		end
+
+		  		if data.latitude.present?
+		  			vote.latitude = data.latitude
+		  		end
+
+		  		if data.longitude.present?
+		  			vote.longitude = data.longitude
+		  		end
+	  		end
 		end
 
 	end
