@@ -91,7 +91,7 @@ namespace :data do
 
       aggregatedAll = Models::Vote.agreggated_all_votes_procontrawho
       candidates = Models::Candidate.all.to_a.map { |e|  
-        {:name => e.name.force_encoding("UTF-8"), :description => e.description.force_encoding("UTF-8"), :image => e.image, :id => e.id, :stat => aggregatedAll[e.id]}
+        {:name => e.name.force_encoding("UTF-8"), :description => e.description.force_encoding("UTF-8"), :image => e.image, :id => e.id, :stat => {:pro => aggregatedAll[e.id][:pro], :contra => aggregatedAll[e.id][:contra], :who => aggregatedAll[e.id][:who]}}
       } 
 
       f.write(candidates.to_json)
