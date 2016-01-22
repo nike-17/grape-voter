@@ -4,7 +4,7 @@ require 'sitemap_generator'
 
 namespace :data do
   
-  PATH = ENV['RACK_ENV'] == :production ? '/www/putin.io/data' : 'temp' 
+  PATH = '/www/putin.io/data'
 
 
   task :environment do
