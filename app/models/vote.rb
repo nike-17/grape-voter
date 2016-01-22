@@ -102,6 +102,7 @@ module Models
 						:pro => 0,
 						:contra => 0,
 						:who => 0,
+
 						:country_pro => {},
 						:country_who => {},
 						:country_contra => {},
@@ -141,6 +142,25 @@ module Models
 					candidates[vote.candidate_id][:loc_contra].push(:latitude => vote.latitude, :longitude => vote.longitude)
 				end
 			end
+
+			candidates.each do |id, candidate| 
+			
+				candidate[:city_pro].sort_by {|k,v| v}.reverse.first(10)
+				candidate[:city_who].sort_by {|k,v| v}.reverse.first(10)
+				candidate[:city_contra].sort_by {|k,v| v}.reverse.first(10)
+				
+				candidate[:country_pro].sort_by {|k,v| v}.reverse.first(10)
+				candidate[:country_who].sort_by {|k,v| v}.reverse.first(10)
+				candidate[:country_contra].sort_by {|k,v| v}.reverse.first(10)
+
+				candidate[:region_pro].sort_by {|k,v| v}.reverse.first(10)
+				candidate[:region_who].sort_by {|k,v| v}.reverse.first(10)
+				candidate[:region_contra].sort_by {|k,v| v}.reverse.first(10)
+
+				candidates[id] = candidate
+
+			end
+			
 			candidates
 		end
 		
