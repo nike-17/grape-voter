@@ -5,7 +5,7 @@ class AttacheIpData < ActiveRecord::Migration
   def change
   	geo = GeoIP.new('./data/GeoLiteCity.dat')
   	Models::Vote.all.each do |vote|
-  		ip = IPAddr.new(vote.ip ,Socket::AF_INET)
+  		ip = IPAddr.new(vote.ip, Socket::AF_INET)
   		data = geo.city(ip)
   		if data.present?
 	  		if data.city_name.present?

@@ -4,13 +4,16 @@ require 'sitemap_generator'
 
 namespace :data do
   
+  PATH = ENV['RACK_ENV'] == :production ? '/www/putin.io/data' : 'temp' 
+
+
   task :environment do
     require_relative '../../config/environment'
   end
   
   desc 'Generate top file'
   task :generate_top => :environment do
-  	File.open("/www/putin.io/data/top.json","w") do |f|
+  	File.open("#{PATH}/top.json","w") do |f|
   		top = Models::Vote.top
   		top.each do |key, array|
   			top[key]  = array.map { |e|  
@@ -61,7 +64,7 @@ namespace :data do
     end 
 
     result.each do |candidate_id, content|
-      File.open("/www/putin.io/data/candidate/#{candidate_id}.json","w") do |f|
+      File.open("#{PATH}/candidate/#{candidate_id}.json","w") do |f|
         f.write(content.to_json) 
       end 
     end
@@ -83,7 +86,8 @@ namespace :data do
 
   desc 'Generate candidates file'
   task :generate_candidates => :environment do
-    File.open("/www/putin.io/data/candidates.json","w") do |f|
+
+    File.open("#{PATH}/candidates.json","w") do |f|
 
       aggregatedAll = Models::Vote.agreggated_all_votes_procontrawho
       candidates = Models::Candidate.all.to_a.map { |e|  

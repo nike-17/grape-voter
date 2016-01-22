@@ -101,19 +101,60 @@ module Models
 					candidates[vote.candidate_id] = {
 						:pro => 0,
 						:contra => 0,
-						:who => 0
+						:who => 0,
+						:country_pro => {},
+						:country_who => {},
+						:country_contra => {},
+
+						:city_pro => {},
+						:city_who => {},
+						:city_contra => {},
+
+						:region_pro => {},
+						:region_who => {},
+						:region_contra => {},
+
+						:loc_pro => [],
+						:loc_who => [],
+						:loc_contra => []
 					}
 				end
+
 				if vote.subject == TYPE_PRO
 					candidates[vote.candidate_id][:pro] = candidates[vote.candidate_id][:pro] + 1
+					candidates = self._set_data_to_candidate(candidates, vote.candidate_id, vote.country_name, :country_pro)
+					candidates = self._set_data_to_candidate(candidates, vote.candidate_id, vote.city_name, :city_pro)
+					candidates = self._set_data_to_candidate(candidates, vote.candidate_id, vote.real_region_name, :region_pro)
+					candidates[vote.candidate_id][:loc_pro].push(:latitude => vote.latitude, :longitude => vote.longitude)
 				elsif vote.subject == TYPE_WHO
-					candidates[vote.candidate_id][:who] = candidates[vote.candidate_id][:who] + 1		
+					candidates[vote.candidate_id][:who] = candidates[vote.candidate_id][:who] + 1
+					candidates = self._set_data_to_candidate(candidates, vote.candidate_id, vote.country_name, :country_who)
+					candidates = self._set_data_to_candidate(candidates, vote.candidate_id, vote.city_name, :city_who)
+					candidates = self._set_data_to_candidate(candidates, vote.candidate_id, vote.real_region_name, :region_who)
+					candidates[vote.candidate_id][:loc_who].push(:latitude => vote.latitude, :longitude => vote.longitude)
+
 				else
 					candidates[vote.candidate_id][:contra] = candidates[vote.candidate_id][:contra] + 1
+					candidates = self._set_data_to_candidate(candidates, vote.candidate_id, vote.country_name, :country_contra)
+					candidates = self._set_data_to_candidate(candidates, vote.candidate_id, vote.city_name, :city_contra)
+					candidates = self._set_data_to_candidate(candidates, vote.candidate_id, vote.real_region_name, :region_contra)
+					candidates[vote.candidate_id][:loc_contra].push(:latitude => vote.latitude, :longitude => vote.longitude)
 				end
 			end
 			candidates
 		end
+		
+		def self._set_data_to_candidate(candidates, candidate_id, data, field)
+			if data.present?
+				data = data.force_encoding("UTF-8")
+				unless candidates[candidate_id][field][data].present?
+					candidates[candidate_id][field][data] = 0;
+				end
+				candidates[candidate_id][field][data] = candidates[candidate_id][field][data] + 1
+			end
+			candidates
+		end
+
 		def self._top_for(subject)
 			Vote.select("sum(ammount) as ammount_sum, candidate_id")
 			.where("subject = ?", subject)
