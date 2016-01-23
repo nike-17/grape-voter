@@ -145,19 +145,17 @@ module Models
 
 			candidates.each do |id, candidate| 
 			
-				candidate[:city_pro].sort_by {|k,v| v}.reverse.first(10)
-				candidate[:city_who].sort_by {|k,v| v}.reverse.first(10)
-				candidate[:city_contra].sort_by {|k,v| v}.reverse.first(10)
+				candidate[:city_pro] = candidate[:city_pro].sort{ |a, b| b[1] <=> a[1] }.first(7)	
+				candidate[:city_who] = candidate[:city_who].sort { |a, b| b[1] <=> a[1] }.first(7)
+				candidate[:city_contra] = candidate[:city_contra].sort { |a, b| b[1] <=> a[1] }.first(7)
 				
-				candidate[:country_pro].sort_by {|k,v| v}.reverse.first(10)
-				candidate[:country_who].sort_by {|k,v| v}.reverse.first(10)
-				candidate[:country_contra].sort_by {|k,v| v}.reverse.first(10)
+				candidate[:country_pro] = candidate[:country_pro].sort { |a, b| b[1] <=> a[1] }.first(7)
+				candidate[:country_who] = candidate[:country_who].sort { |a, b| b[1] <=> a[1] }.first(7)
+				candidate[:country_contra] = candidate[:country_contra].sort { |a, b| b[1] <=> a[1] }.first(7)
 
-				candidate[:region_pro].sort_by {|k,v| v}.reverse.first(10)
-				candidate[:region_who].sort_by {|k,v| v}.reverse.first(10)
-				candidate[:region_contra].sort_by {|k,v| v}.reverse.first(10)
-
-				candidates[id] = candidate
+				candidate[:region_pro] = candidate[:region_pro].sort { |a, b| b[1] <=> a[1] }.first(7)
+				candidate[:region_who] = candidate[:region_who].sort { |a, b| b[1] <=> a[1] }.first(7)
+				candidate[:region_contra] = candidate[:region_contra].sort { |a, b| b[1] <=> a[1] }.first(7)
 
 			end
 			

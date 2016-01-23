@@ -5,6 +5,7 @@ require 'sitemap_generator'
 namespace :data do
   
   PATH = '/www/putin.io/data'
+  PATH = '../../putin/src/data/'
 
 
   task :environment do
